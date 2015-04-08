@@ -8,7 +8,6 @@
 %define 	module	scales
 Summary:	Stats for Python processes
 Summary(pl.UTF-8):	Statyski dla procesów Pythona
-# Name must match the python module/package name (as in 'import' statement)
 Name:		python-%{module}
 Version:	1.0.9
 Release:	2
@@ -16,26 +15,20 @@ License:	Apache
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version}.tar.gz
 # Source0-md5:	c61167f2b5f506f0a34a7b8a295a9567
-# Source0:	%{name}-%{version}.tar.gz #md5=c61167f2b5f506f0a34a7b8a295a9567
 URL:		https://www.github.com/Cue/scales
 BuildRequires:	rpm-pythonprov
-# remove BR: python-devel for 'noarch' packages.
-# if py_postclean is used
 BuildRequires:	rpmbuild(macros) >= 1.219
-# when using /usr/bin/env or other in-place substitutions
-#BuildRequires:	sed >= 4.0
-# when python3 present
 %if %{with python2}
 BuildRequires:	python-nose
 BuildRequires:	python-setuptools > 7.0
+BuildRequires:	python-six
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules
 BuildRequires:	python3-nose
 BuildRequires:	python3-setuptools > 7.0
+BuildRequires:	python3-six
 %endif
-# Below Rs only work for main package (python2)
-#Requires:		python-libs
 Requires:	python-modules
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -51,7 +44,6 @@ robi. Pozwala wysłać dane do Graphite albo do pliku do analizy.
 
 %package -n python3-%{module}
 Summary:	-
-Summary(pl.UTF-8):	-
 Group:		Libraries/Python
 Requires:	python3-modules
 
@@ -77,7 +69,6 @@ Dokumentacja API %{module}.
 
 %prep
 %setup -q -n %{module}-%{version}
-
 
 %build
 %if %{with python2}
@@ -115,7 +106,6 @@ rm -rf $RPM_BUILD_ROOT
 	--root=$RPM_BUILD_ROOT
 %endif
 
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -123,19 +113,19 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %dir %{py_sitescriptdir}/greplin
-%dir %{py_sitescriptdir}/greplin/%{module}
-%{py_sitescriptdir}/greplin/%{module}/*.py[co]
-%if "%{py_ver}" > "2.4"
-%{py_sitescriptdir}/%{module}-%{version}-py*.egg-info
-%endif
+%dir %{py_sitescriptdir}/greplin/scales
+%{py_sitescriptdir}/greplin/scales/*.py[co]
+%{py_sitescriptdir}/scales-%{version}-py*.egg-info
+%{py_sitescriptdir}/scales-%{version}-py*-nspkg.pth
 %endif
 
 %if %{with python3}
 %files -n python3-%{module}
 %defattr(644,root,root,755)
 %dir %{py3_sitescriptdir}/greplin
-%{py3_sitescriptdir}/greplin/%{module}
-%{py3_sitescriptdir}/%{module}-%{version}-py*.egg-info
+%{py3_sitescriptdir}/greplin/scales
+%{py3_sitescriptdir}/scales-%{version}-py*.egg-info
+%{py3_sitescriptdir}/scales-%{version}-py*-nspkg.pth
 %endif
 
 %if %{with doc}
