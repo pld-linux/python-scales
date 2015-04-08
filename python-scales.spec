@@ -11,7 +11,7 @@ Summary(pl.UTF-8):	Statyski dla procesów Pythona
 # Name must match the python module/package name (as in 'import' statement)
 Name:		python-%{module}
 Version:	1.0.9
-Release:	1
+Release:	2
 License:	Apache
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version}.tar.gz
@@ -26,10 +26,12 @@ BuildRequires:	rpmbuild(macros) >= 1.219
 #BuildRequires:	sed >= 4.0
 # when python3 present
 %if %{with python2}
+BuildRequires:	python-nose
 BuildRequires:	python-setuptools > 7.0
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules
+BuildRequires:	python3-nose
 BuildRequires:	python3-setuptools > 7.0
 %endif
 # Below Rs only work for main package (python2)
