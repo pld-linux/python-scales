@@ -10,7 +10,7 @@ Summary:	Stats for Python processes
 Summary(pl.UTF-8):	Statyski dla procesów Pythona
 Name:		python-%{module}
 Version:	1.0.9
-Release:	3
+Release:	4
 License:	Apache
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version}.tar.gz
