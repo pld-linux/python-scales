@@ -17,7 +17,7 @@ Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version
 # Source0-md5:	c61167f2b5f506f0a34a7b8a295a9567
 URL:		https://www.github.com/Cue/scales
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.219
+BuildRequires:	rpmbuild(macros) >= 1.710
 %if %{with python2}
 BuildRequires:	python-nose
 BuildRequires:	python-setuptools > 7.0
