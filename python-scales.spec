@@ -5,16 +5,17 @@
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
 
-%define 	module	scales
+%define		module	scales
 Summary:	Stats for Python processes
 Summary(pl.UTF-8):	Statyski dla procesów Pythona
 Name:		python-%{module}
 Version:	1.0.9
-Release:	7
+Release:	8
 License:	Apache
 Group:		Libraries/Python
 Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version}.tar.gz
 # Source0-md5:	c61167f2b5f506f0a34a7b8a295a9567
+Patch0:		python-3.8.patch
 URL:		https://www.github.com/Cue/scales
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.710
@@ -69,6 +70,7 @@ Dokumentacja API %{module}.
 
 %prep
 %setup -q -n %{module}-%{version}
+%patch0 -p1
 
 %build
 %if %{with python2}
