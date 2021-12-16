@@ -1,36 +1,36 @@
 #
 # Conditional build:
-%bcond_with	doc		# don't build doc
-%bcond_without	tests	# do not perform "make test"
+%bcond_without	tests	# unit tests
 %bcond_without	python2 # CPython 2.x module
 %bcond_without	python3 # CPython 3.x module
 
 %define		module	scales
 Summary:	Stats for Python processes
-Summary(pl.UTF-8):	Statyski dla procesów Pythona
+Summary(pl.UTF-8):	Statystyki dla procesów Pythona
 Name:		python-%{module}
 Version:	1.0.9
 Release:	9
 License:	Apache
 Group:		Libraries/Python
-Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version}.tar.gz
+Source0:	https://pypi.python.org/packages/source/s/scales/%{module}-%{version}.tar.gz
 # Source0-md5:	c61167f2b5f506f0a34a7b8a295a9567
 Patch0:		python-3.8.patch
 URL:		https://www.github.com/Cue/scales
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
+BuildRequires:	python-modules >= 1:2.6
 BuildRequires:	python-nose
 BuildRequires:	python-setuptools > 1:7.0
 BuildRequires:	python-six
 %endif
 %if %{with python3}
-BuildRequires:	python3-modules
+BuildRequires:	python3-modules >= 1:3.2
 BuildRequires:	python3-nose
 BuildRequires:	python3-setuptools > 1:7.0
 BuildRequires:	python3-six
 %endif
-Requires:	python-modules
+Requires:	python-modules >= 1:2.6
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -40,13 +40,15 @@ server is doing. It can also send metrics to Graphite for graphing or
 to a file for crash forensics.
 
 %description -l pl.UTF-8
-Śledzi stan serwerqa i jego statystyki pozwalając zobaczyć co serwer
-robi. Pozwala wysłać dane do Graphite albo do pliku do analizy.
+Ten moduł śledzi stan serwera i jego statystyki, pozwalając zobaczyć,
+co serwer robi. Potrafi także wysyłać dane do Graphite do wykresów
+albo do pliku do analizy.
 
 %package -n python3-%{module}
-Summary:	-
+Summary:	Stats for Python processes
+Summary(pl.UTF-8):	Statystyki dla procesów Pythona
 Group:		Libraries/Python
-Requires:	python3-modules
+Requires:	python3-modules >= 1:3.2
 
 %description -n python3-%{module}
 Tracks server state and statistics, allowing you to see what your
@@ -54,8 +56,9 @@ server is doing. It can also send metrics to Graphite for graphing or
 to a file for crash forensics.
 
 %description -n python3-%{module} -l pl.UTF-8
-Śledzi stan serwerqa i jego statystyki pozwalając zobaczyć co serwer
-robi. Pozwala wysłać dane do Graphite albo do pliku do analizy.
+Ten moduł śledzi stan serwera i jego statystyki, pozwalając zobaczyć,
+co serwer robi. Potrafi także wysyłać dane do Graphite do wykresów
+albo do pliku do analizy.
 
 %package apidocs
 Summary:	%{module} API documentation
@@ -79,12 +82,6 @@ Dokumentacja API %{module}.
 
 %if %{with python3}
 %py3_build %{?with_tests:test}
-%endif
-
-%if %{with doc}
-cd docs
-%{__make} -j1 html
-rm -rf _build/html/_sources
 %endif
 
 %install
@@ -120,10 +117,4 @@ rm -rf $RPM_BUILD_ROOT
 %{py3_sitescriptdir}/greplin/scales
 %{py3_sitescriptdir}/scales-%{version}-py*.egg-info
 %{py3_sitescriptdir}/scales-%{version}-py*-nspkg.pth
-%endif
-
-%if %{with doc}
-%files apidocs
-%defattr(644,root,root,755)
-%doc docs/_build/html/*
 %endif
