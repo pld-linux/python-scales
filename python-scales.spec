@@ -18,16 +18,16 @@ Source0:	https://pypi.python.org/packages/source/s/%{module}/%{module}-%{version
 Patch0:		python-3.8.patch
 URL:		https://www.github.com/Cue/scales
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.710
+BuildRequires:	rpmbuild(macros) >= 1.714
 %if %{with python2}
 BuildRequires:	python-nose
-BuildRequires:	python-setuptools > 7.0
+BuildRequires:	python-setuptools > 1:7.0
 BuildRequires:	python-six
 %endif
 %if %{with python3}
 BuildRequires:	python3-modules
 BuildRequires:	python3-nose
-BuildRequires:	python3-setuptools > 7.0
+BuildRequires:	python3-setuptools > 1:7.0
 BuildRequires:	python3-six
 %endif
 Requires:	python-modules
